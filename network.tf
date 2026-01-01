@@ -28,16 +28,26 @@ resource "aws_route_table" "public" {
   }
 }
 
+resource "aws_route_table_association" "public" {
+  count          = 2
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+
 resource "aws_security_group" "app" {
   name        = "${var.project_name}-app-sg"
   description = "Security group for ECS app"
   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = length(var.allowed_cidr_block) > 0 ? var.allowed_cidr_block : ["0.0.0.0/0"]
+  # Prefix List が設定されている場合のみ ingress を許可
+  dynamic "ingress" {
+    for_each = var.allowed_prefix_list_id != "" ? [1] : []
+    content {
+      from_port       = 80
+      to_port         = 80
+      protocol        = "tcp"
+      prefix_list_ids = [var.allowed_prefix_list_id]
+    }
   }
 
   egress {

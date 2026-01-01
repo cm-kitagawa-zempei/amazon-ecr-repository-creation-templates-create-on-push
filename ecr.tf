@@ -9,16 +9,20 @@ resource "aws_ecr_repository_creation_template" "ecr_public_pull_through_cache" 
 
   image_tag_mutability = "MUTABLE"
   lifecycle_policy = jsonencode({
-    rulePriority = 1
-    description  = "Keep last 3 images"
-    selection = {
-      tagStatus   = "any"
-      countType   = "imageCountMoreThan"
-      countNumber = 3
-    }
-    action = {
-      type = "expire"
-    }
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Keep last 3 images"
+        selection = {
+          tagStatus   = "any"
+          countType   = "imageCountMoreThan"
+          countNumber = 3
+        }
+        action = {
+          type = "expire"
+        }
+      }
+    ]
   })
 }
 

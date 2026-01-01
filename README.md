@@ -2,6 +2,11 @@
 
 ECR の「リポジトリ作成テンプレート」と「Create on push」機能を検証するプロジェクト。
 
+## 実行環境
+
+- ローカル: Apple Silicon Mac（ARM64）
+- Fargate: ARM64（Graviton）
+
 ## pre-commit
 
 ```sh
@@ -55,6 +60,7 @@ No modules.
 | [aws_iam_role_policy_attachment.ecs_task_execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_internet_gateway.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
 | [aws_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
+| [aws_route_table_association.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
 | [aws_security_group.app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_subnet.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
@@ -65,7 +71,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_allowed_cidr_block"></a> [allowed\_cidr\_block](#input\_allowed\_cidr\_block) | CIDR blocks allowed to access the application | `list(string)` | `[]` | no |
+| <a name="input_allowed_prefix_list_id"></a> [allowed\_prefix\_list\_id](#input\_allowed\_prefix\_list\_id) | Prefix list ID allowed to access the application | `string` | `""` | no |
 | <a name="input_app_name"></a> [app\_name](#input\_app\_name) | Application name | `string` | `"my-app"` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | `"ap-northeast-1"` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name | `string` | `"ecr-template-demo"` | no |

@@ -45,10 +45,15 @@ resource "aws_ecs_task_definition" "app" {
   memory                   = 512
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
 
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64"
+  }
+
   container_definitions = jsonencode([
     {
       name  = var.app_name
-      image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/app/${var.app_name}:latest"
+      image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.project_name}-app/${var.app_name}:latest"
       portMappings = [
         {
           containerPort = 80

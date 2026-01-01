@@ -16,10 +16,10 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
-variable "allowed_cidr_block" {
-  description = "CIDR blocks allowed to access the application"
-  type        = list(string)
-  default     = []
+variable "allowed_prefix_list_id" {
+  description = "Prefix list ID allowed to access the application"
+  type        = string
+  default     = ""
 }
 
 variable "app_name" {
